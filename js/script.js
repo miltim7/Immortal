@@ -73,7 +73,7 @@ class SystemSlider {
             if (!this.isDragging) return;
             this.currentX = x;
             const diff = this.currentX - this.startX;
-            const slideWidth = this.slides[0].offsetWidth + 24;
+            const slideWidth = this.slides[0].offsetWidth + 0;
             const sliderWidth = this.slider.offsetWidth;
             const target = this.currentSlide * slideWidth;
             const centerOffset = (sliderWidth - slideWidth) / 2;
@@ -132,7 +132,7 @@ const observer = new IntersectionObserver((entries) => {
                     text.split('').forEach((char, i) => {
                         const span = document.createElement('span');
                         span.textContent = char;
-                        span.style.color = 'gray'; // начальный цвет
+                        span.style.color = 'rgba(63, 63, 63, 1)'; 
                         span.style.transition = 'color 0.3s ease';
                         span.style.transitionDelay = `${i * 0.05}s`;
                         textEl.appendChild(span);
@@ -142,7 +142,7 @@ const observer = new IntersectionObserver((entries) => {
 
                     setTimeout(() => {
                         const spans = textEl.querySelectorAll('span');
-                        spans.forEach(span => span.style.color = 'white');
+                        spans.forEach(span => span.style.color = 'rgba(255, 255, 255, 1)');
                     }, 50);
                 }
             });

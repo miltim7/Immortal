@@ -128,13 +128,12 @@ section {
 .main {
     position: relative;
     border-radius: 40px;
-    padding-top: 96px;
-    padding-right: 64px;
-    padding-bottom: 96px;
-    padding-left: 64px;
+    padding: 96px 64px;
     align-items: center;
     display: flex;
     justify-content: center;
+    min-height: 100vh;
+    height: 100vh;
 }
 
 .main__container {
@@ -149,8 +148,9 @@ section {
 .main__scroll {
     width: 24px;
     position: absolute;
-    bottom: 96px;
+    bottom: 24px;
     left: 50%;
+    transform: translateX(-50%);
     height: 56px;
 }
 
@@ -273,7 +273,6 @@ section {
 .info__container {
     max-width: 1024px;
     position: relative;
-    z-index: 1;
 }
 
 .info__image {
@@ -341,15 +340,23 @@ section {
     width: 100%;
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+
 }
 
 .system__track {
     display: flex;
     align-items: center;
     transition: transform 0.5s ease;
-    gap: 24px;
-    /* Начальная позиция для второго активного слайда */
-    transform: translateX(calc(-50% - 12px));
+    gap: 0px;
+}
+
+@media (max-width: 1024px) {
+    .system__track {
+        display: flex;
+        align-items: center;
+        transition: transform 0.5s ease;
+        gap: 24px;
+    }
 }
 
 .system__item {
@@ -402,17 +409,20 @@ section {
     font-size: 96px;
     line-height: 120%;
     letter-spacing: -2%;
+    font-family: "Helvetica-Roman";
     color: rgba(255, 255, 255, 1);
 }
 
 .system__item--desc {
     z-index: 1;
+    font-family: 'Manrope Regular';
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
 .system__item--desc h3 {
+    font-family: "Helvetica-Roman";
     font-weight: 550;
     font-size: 26px;
     line-height: 120%;
@@ -486,14 +496,14 @@ section {
 .tech__container {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 20px;
     min-height: 979px;
 }
 
 .tech__item {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .tech__item:nth-child(1) {
@@ -523,16 +533,56 @@ section {
 .tech__card--header {
     width: 56px;
     height: 56px;
+    box-sizing: border-box;
+    /* важно: размеры как в фигме */
     padding: 16px;
+    /* внутренняя отступ = 16 */
     display: flex;
-    justify-content: center;
     align-items: center;
-    border-radius: 6px;
-    background: rgba(32, 32, 32, 1);
-    border: 1px dashed rgba(105, 105, 105, 1);
-    border-image: none;
+    justify-content: center;
     gap: 8px;
+    position: relative;
+    /* для позиционирования SVG */
+    border-radius: 6px;
+    background: #202020;
+    /* rgba(32,32,32,1) */
+    /* убираем обычный бордер — используем SVG */
+    border: none;
 }
+
+.tech__icon {
+    width: 24px;
+    /* 56 - 16*2 = 24 → идеально под padding */
+    height: 24px;
+    object-fit: contain;
+    display: block;
+    /* по желанию — легкая подсветка */
+    /* filter: drop-shadow(0 0 1px rgba(255,255,255,.1)); */
+}
+
+.tech__card-border {
+    position: absolute;
+    inset: 0;
+    /* поверх всей карточки */
+    pointer-events: none;
+    /* легкий объём у штрихов */
+    filter: drop-shadow(0 0 0.5px rgba(255, 255, 255, .12));
+}
+
+/* опционально: "бегущие" штрихи */
+@keyframes dash {
+    to {
+        stroke-dashoffset: -12;
+    }
+
+    /* 8 + 4 = шаг паттерна */
+}
+
+.tech__card-border rect {
+    /* раскомментируй, если нужна анимация */
+    /* animation: dash 6s linear infinite; */
+}
+
 
 .tech__card--header img {
     width: 24px;
@@ -586,7 +636,7 @@ section {
 .form form .input {
     display: flex;
     width: 100%;
-    gap: 12px;
+    gap: 6px;
     flex-direction: column;
 }
 
@@ -622,7 +672,7 @@ section {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    font-weight: 550;
+    font-weight: 600;
     font-size: 26px;
     line-height: 120%;
     text-decoration: none;
@@ -670,6 +720,10 @@ section {
     letter-spacing: -2%;
     color: rgba(11, 11, 11, 1);
     border: none;
+}
+
+.form form input::placeholder {
+    color: rgba(63, 63, 63, 1);
 }
 
 .form form input,
@@ -731,7 +785,8 @@ section {
     height: 32px;
 }
 
-.footer__item a, .footer__item p {
+.footer__item a,
+.footer__item p {
     text-decoration: none;
     font-family: 'Manrope Regular';
     font-weight: 400;
@@ -955,8 +1010,38 @@ section {
 
     }
 
+    .system__item h2 {
+        font-weight: 400;
+        font-size: 56px;
+        line-height: 120%;
+        letter-spacing: -2%;
+
+    }
+
+    .system__item--desc h3 {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 120%;
+        letter-spacing: -2%;
+
+    }
+
+    .system__item--desc p {
+        font-family: "Manrope Regular";
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        letter-spacing: -2%;
+
+    }
+
     .header__links--item {
         display: none;
+    }
+
+    .main {
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     .info__images--container {
@@ -988,7 +1073,7 @@ section {
     .system__item {
         width: 100%;
         padding: 16px 16px 32px 16px;
-        height: 380px;
+        height: 320px;
     }
 
     .footer {
@@ -1048,7 +1133,15 @@ section {
     }
 
     .main {
-        min-height: 812px;
+        min-height: 100vh;
+    }
+
+    .tech .section__content br {
+        display: none;
+    }
+
+    .system .section__content br {
+        display: none;
     }
 
     .main__scroll {
@@ -1057,6 +1150,10 @@ section {
 
     .main__container h1 {
         font-size: 44px;
+    }
+
+    .main__container h1 br {
+        display: none;
     }
 
     .header {
