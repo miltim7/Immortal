@@ -132,7 +132,7 @@ const observer = new IntersectionObserver((entries) => {
                     text.split('').forEach((char, i) => {
                         const span = document.createElement('span');
                         span.textContent = char;
-                        span.style.color = 'rgba(63, 63, 63, 1)'; 
+                        span.style.color = 'rgba(63, 63, 63, 1)';
                         span.style.transition = 'color 0.3s ease';
                         span.style.transitionDelay = `${i * 0.05}s`;
                         textEl.appendChild(span);
@@ -159,18 +159,86 @@ animItems.forEach(el => observer.observe(el));
 const anchorLinks = document.querySelectorAll('a[href^="#"]');
 
 anchorLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault(); // отключаем стандартный переход
+    link.addEventListener('click', (e) => {
+        e.preventDefault(); // отключаем стандартный переход
 
-    const targetId = link.getAttribute('href').substring(1); // убираем #
-    const targetEl = document.getElementById(targetId);
+        const targetId = link.getAttribute('href').substring(1); // убираем #
+        const targetEl = document.getElementById(targetId);
 
-    if (targetEl) {
-      // Плавный скролл к элементу
-      targetEl.scrollIntoView({
-        behavior: 'smooth', // плавно
-        block: 'start'      // прижимает к верху окна
-      });
-    }
-  });
+        if (targetEl) {
+            // Плавный скролл к элементу
+            targetEl.scrollIntoView({
+                behavior: 'smooth', // плавно
+                block: 'start'      // прижимает к верху окна
+            });
+        }
+    });
 });
+
+(function () {
+  const container = document.querySelector('.tech__container');
+  if (!container) return;
+
+  const items = Array.from(container.querySelectorAll('.tech__item'));
+  if (!items.length) return;
+
+  function px(val) {
+    return Number.parseFloat(val || '0') || 0;
+  }
+
+  function applyEqualWidths() {
+    // mobile: не фиксируем ширины
+    const isMobile = matchMedia('(max-width: 768px)').matches;
+    if (isMobile) {
+      items.forEach(it => {
+        it.style.flexBasis = '';
+        it.style.minWidth  = '';
+        it.style.maxWidth  = '';
+      });
+      return;
+    }
+
+    const cs = getComputedStyle(container);
+    // в flex контейнере используем column-gap (или fallback на gap)
+    const colGap = px(cs.columnGap || cs.gap || '20px');
+    const n = items.length;
+    const totalGaps = colGap * (n - 1);
+
+    // ширина, доступная под колонки
+    const inner = container.clientWidth - totalGaps;
+    const column = Math.floor(inner / n);
+
+    items.forEach(it => {
+      it.style.flexBasis = column + 'px';
+      it.style.minWidth  = column + 'px';
+      it.style.maxWidth  = column + 'px';
+    });
+  }
+
+  // высоты карточек (из прошлой задачи) — чтобы всё было ровно и по высоте
+  function syncHeights() {
+    const cards = container.querySelectorAll('.tech__card');
+    if (!cards.length) return;
+    // на мобилке — естественная высота
+    const isMobile = matchMedia('(max-width: 1024px)').matches;
+    let max = 0;
+    cards.forEach(c => { c.style.height = 'auto'; });
+    if (isMobile) return;
+    cards.forEach(c => { max = Math.max(max, c.offsetHeight); });
+    cards.forEach(c => { c.style.height = max + 'px'; });
+  }
+
+  const rerun = () => { applyEqualWidths(); syncHeights(); };
+
+  // реагируем на ресайз и загрузку
+  window.addEventListener('resize', rerun, { passive: true });
+  window.addEventListener('load', rerun);
+
+  // если контент/шрифты поменяются — пересчитать
+  const ro = new ResizeObserver(rerun);
+  ro.observe(container);
+
+  // на случай динамического изменения текста внутри карточек
+  const mo = new MutationObserver(rerun);
+  mo.observe(container, { subtree: true, childList: true, characterData: true });
+})();
