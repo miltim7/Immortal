@@ -176,69 +176,97 @@ anchorLinks.forEach(link => {
 });
 
 (function () {
-  const container = document.querySelector('.tech__container');
-  if (!container) return;
+    const container = document.querySelector('.tech__container');
+    if (!container) return;
 
-  const items = Array.from(container.querySelectorAll('.tech__item'));
-  if (!items.length) return;
+    const items = Array.from(container.querySelectorAll('.tech__item'));
+    if (!items.length) return;
 
-  function px(val) {
-    return Number.parseFloat(val || '0') || 0;
-  }
-
-  function applyEqualWidths() {
-    // mobile: не фиксируем ширины
-    const isMobile = matchMedia('(max-width: 768px)').matches;
-    if (isMobile) {
-      items.forEach(it => {
-        it.style.flexBasis = '';
-        it.style.minWidth  = '';
-        it.style.maxWidth  = '';
-      });
-      return;
+    function px(val) {
+        return Number.parseFloat(val || '0') || 0;
     }
 
-    const cs = getComputedStyle(container);
-    // в flex контейнере используем column-gap (или fallback на gap)
-    const colGap = px(cs.columnGap || cs.gap || '20px');
-    const n = items.length;
-    const totalGaps = colGap * (n - 1);
+    function applyEqualWidths() {
+        // mobile: не фиксируем ширины
+        const isMobile = matchMedia('(max-width: 768px)').matches;
+        if (isMobile) {
+            items.forEach(it => {
+                it.style.flexBasis = '';
+                it.style.minWidth = '';
+                it.style.maxWidth = '';
+            });
+            return;
+        }
 
-    // ширина, доступная под колонки
-    const inner = container.clientWidth - totalGaps;
-    const column = Math.floor(inner / n);
+        const cs = getComputedStyle(container);
+        // в flex контейнере используем column-gap (или fallback на gap)
+        const colGap = px(cs.columnGap || cs.gap || '20px');
+        const n = items.length;
+        const totalGaps = colGap * (n - 1);
 
-    items.forEach(it => {
-      it.style.flexBasis = column + 'px';
-      it.style.minWidth  = column + 'px';
-      it.style.maxWidth  = column + 'px';
-    });
-  }
+        // ширина, доступная под колонки
+        const inner = container.clientWidth - totalGaps;
+        const column = Math.floor(inner / n);
 
-  // высоты карточек (из прошлой задачи) — чтобы всё было ровно и по высоте
-  function syncHeights() {
-    const cards = container.querySelectorAll('.tech__card');
-    if (!cards.length) return;
-    // на мобилке — естественная высота
-    const isMobile = matchMedia('(max-width: 1024px)').matches;
-    let max = 0;
-    cards.forEach(c => { c.style.height = 'auto'; });
-    if (isMobile) return;
-    cards.forEach(c => { max = Math.max(max, c.offsetHeight); });
-    cards.forEach(c => { c.style.height = max + 'px'; });
-  }
+        items.forEach(it => {
+            it.style.flexBasis = column + 'px';
+            it.style.minWidth = column + 'px';
+            it.style.maxWidth = column + 'px';
+        });
+    }
 
-  const rerun = () => { applyEqualWidths(); syncHeights(); };
+    // высоты карточек (из прошлой задачи) — чтобы всё было ровно и по высоте
+    function syncHeights() {
+        const cards = container.querySelectorAll('.tech__card');
+        if (!cards.length) return;
+        // на мобилке — естественная высота
+        const isMobile = matchMedia('(max-width: 1024px)').matches;
+        let max = 0;
+        cards.forEach(c => { c.style.height = 'auto'; });
+        if (isMobile) return;
+        cards.forEach(c => { max = Math.max(max, c.offsetHeight); });
+        cards.forEach(c => { c.style.height = max + 'px'; });
+    }
 
-  // реагируем на ресайз и загрузку
-  window.addEventListener('resize', rerun, { passive: true });
-  window.addEventListener('load', rerun);
+    const rerun = () => { applyEqualWidths(); syncHeights(); };
 
-  // если контент/шрифты поменяются — пересчитать
-  const ro = new ResizeObserver(rerun);
-  ro.observe(container);
+    // реагируем на ресайз и загрузку
+    window.addEventListener('resize', rerun, { passive: true });
+    window.addEventListener('load', rerun);
 
-  // на случай динамического изменения текста внутри карточек
-  const mo = new MutationObserver(rerun);
-  mo.observe(container, { subtree: true, childList: true, characterData: true });
+    // если контент/шрифты поменяются — пересчитать
+    const ro = new ResizeObserver(rerun);
+    ro.observe(container);
+
+    // на случай динамического изменения текста внутри карточек
+    const mo = new MutationObserver(rerun);
+    mo.observe(container, { subtree: true, childList: true, characterData: true });
 })();
+
+
+const form = document.getElementById('contactForm');
+const btn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // 1️⃣ loading state
+    btn.classList.add('loading');
+    btn.textContent = 'Отправка...';
+    btn.disabled = true;
+
+    // имитация запроса
+    await new Promise(res => setTimeout(res, 2500));
+
+    // 2️⃣ success state
+    btn.classList.remove('loading');
+    btn.classList.add('success');
+    btn.textContent = 'Отправлено';
+
+    // (опционально) разблокировать и вернуть обратно через несколько секунд
+    setTimeout(() => {
+        btn.classList.remove('success');
+        btn.textContent = 'Отправить';
+        btn.disabled = false;
+    }, 16000);
+});

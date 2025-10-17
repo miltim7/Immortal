@@ -237,6 +237,8 @@ section {
     align-items: center;
 }
 
+.header__links--item {}
+
 .header__links a {
     font-family: "Manrope Semibold";
     font-size: 16px;
@@ -263,10 +265,25 @@ section {
     text-decoration: none;
 }
 
+.header__btn a:hover{
+    background: rgba(194, 194, 194, 1);
+    border: 2px solid rgba(255, 255, 255, 1)
+}
+
 .header__btn img {
     width: 35px;
 }
 
+
+@media (min-width: 1800px) {
+    .info__images .info__images--container {
+        width: 72%;
+    }
+
+    .info__images {
+        align-items: center;
+    }
+}
 
 /* INFO */
 
@@ -276,6 +293,12 @@ section {
     align-items: center;
     justify-content: center;
 
+}
+
+.info__background {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
 }
 
 .info__container {
@@ -690,57 +713,11 @@ section {
     color: rgba(255, 255, 255, 1);
 }
 
-/* анимированная линия, выезжающая из центра */
-.form__links--container a::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -4px;
-    width: 0;
-    height: 2px;
-    background: rgb(255, 255, 255);
-    border-radius: 2px;
-    transition: width .3s ease, left .3s ease;
+.form__links--container a:hover {
+    font-size: 26px;
 }
 
-/* лёгкий подъём, свечение текста и проявление линии */
-.form__links--container a:hover,
-.form__links--container a:focus-visible {
-    transform: translateY(-2px);
-    text-shadow: 0 0 12px rgba(124, 245, 255, .45);
-}
 
-.form__links--container a:hover::after,
-.form__links--container a:focus-visible::after {
-    left: 0;
-    width: 100%;
-}
-
-/* если внутри есть иконка <i> или <svg> — слегка сдвигаем её вправо при ховере */
-.form__links--container a i,
-.form__links--container a svg {
-    transition: transform .25s ease;
-}
-
-.form__links--container a:hover i,
-.form__links--container a:hover svg,
-.form__links--container a:focus-visible i,
-.form__links--container a:focus-visible svg {
-    transform: translateX(3px);
-}
-
-/* уважение к настройке «меньше анимации» */
-@media (prefers-reduced-motion: reduce) {
-
-    .form__links--container a,
-    .form__links--container a::after,
-    .form__links--container a i,
-    .form__links--container a svg {
-        transition: none;
-    }
-}
-
-.form__links--container a:hover {}
 
 .form__links--container img {
     width: 28px;
@@ -767,21 +744,79 @@ section {
 
 .form form button {
     width: 100%;
-    opacity: 1;
-    gap: 12px;
-    padding-top: 12px;
-    padding-right: 32px;
-    padding-bottom: 12px;
-    font-family: "Manrope Semibold";
-    padding-left: 32px;
+    padding: 12px 32px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 1);
+    font-family: "Manrope Semibold";
     font-size: 18px;
     line-height: 150%;
     letter-spacing: -2%;
     color: rgba(11, 11, 11, 1);
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 1);
+    cursor: pointer;
+    transition: all .25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
+
+.form form button:hover:not(.loading):not(.success) {
+    background: rgba(194, 194, 194, 1);
+}
+
+/* --- состояние загрузки --- */
+.form form button.loading {
+    background: rgba(194, 194, 194, 1);
+    padding-left: 24px;
+    cursor: not-allowed;
+    border: none;
+    position: relative;
+    color: rgba(11, 11, 11, 1);
+}
+
+.form form button.loading::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(11, 11, 11, 0.3);
+    border-top-color: rgba(11, 11, 11, 1);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- состояние отправлено --- */
+.form form button.success {
+    font-family: "Manrope";
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: -2%;
+    background: rgba(194, 194, 194, 1);
+    color: rgba(11, 11, 11, 1);
+    border: none;
+    cursor: default;
+    position: relative;
+}
+
+.form form button.success::before {
+    content: "";
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background-image: url('../images/success.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
 
 .form form input::placeholder {
     color: rgba(63, 63, 63, 1);
@@ -846,12 +881,49 @@ section {
     gap: 12px;
 }
 
-.footer__item--link img {
+.footer__item--link {
+    display: inline-block;
     width: 32px;
     height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    vertical-align: middle;
+    line-height: 0 !important;
+    /* перекрываем .footer__item a */
+    font-size: 0 !important;
+    /* чтобы вообще не влиял текстовый line box */
 }
 
-.footer__item a,
+
+/* исходные */
+.footer3 {
+    background-image: url('../images/footer3.png');
+}
+
+.footer1 {
+    background-image: url('../images/footer1.png');
+}
+
+.footer2 {
+    background-image: url('../images/footer2.png');
+}
+
+/* hover-версии */
+.footer3:hover {
+    background-image: url('../images/footer3-3.png');
+}
+
+.footer1:hover {
+    background-image: url('../images/footer1-1.png');
+}
+
+.footer2:hover {
+    background-image: url('../images/footer2-2.png');
+}
+
+
+.footer__item a:not(.footer__item--link, .footer__item--logo),
 .footer__item p {
     text-decoration: none;
     font-family: 'Manrope Regular';
@@ -860,6 +932,15 @@ section {
     line-height: 150%;
     letter-spacing: -2%;
     color: rgba(105, 105, 105, 1);
+}
+
+
+.footer__item--rek {
+    font-family: 'Manrope' !important;
+}
+
+.footer__item--rek:hover {
+    color: #FFFFFF !important;
 }
 
 .footer__logo {
