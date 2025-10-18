@@ -369,9 +369,8 @@ section {
 .system__slider {
     overflow: hidden;
     width: 100%;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-
+    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
 }
 
 .system__track {
