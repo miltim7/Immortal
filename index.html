@@ -1,3 +1,5 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +9,27 @@
     <title>Immortal - Home</title>
     <link href="./css/style.css" rel="stylesheet">
 </head>
+<script src="./js/hover.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.tech__card-border').forEach((svg, i) => {
+            const grad = svg.querySelector('linearGradient[id]');
+            if (!grad) return;
+            const oldId = grad.id;
+            const newId = oldId + '-' + i;              // dashGradient-0, dashGradient-1, ...
+            grad.id = newId;
+
+            // обновляем ссылку stroke="url(#oldId)" на новый
+            const rect = svg.querySelector('rect[stroke^="url(#"]');
+            if (rect) rect.setAttribute('stroke', `url(#${newId})`);
+        });
+    });
+</script>
 
 <body>
     <div class="header animate">
         <div class="header__logo">
-            <a href="/">
+            <a href="/" data-noslide>
                 <img src="./images/logo.png">
             </a>
         </div>
@@ -73,17 +91,18 @@
                     <div class="tech__card">
                         <div class="tech__card--header">
                             <img class="tech__icon" src="./images/tech6.png" alt="">
-                            <svg class="tech__card-border" viewBox="0 0 56 56" preserveAspectRatio="none"
-                                aria-hidden="true">
+                            <svg class="tech__card-border" viewBox="0 0 56 56" aria-hidden="true">
                                 <defs>
-                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0" stop-color="rgba(160,160,160,.9)" />
-                                        <stop offset="1" stop-color="rgba(105,105,105,.9)" />
+                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1"
+                                        gradientUnits="objectBoundingBox">
+                                        <stop offset="0" stop-color="#A0A0A0" stop-opacity="0.9" />
+                                        <stop offset="1" stop-color="#696969" stop-opacity="0.9" />
                                     </linearGradient>
                                 </defs>
                                 <rect x="0.5" y="0.5" width="55" height="55" rx="6" ry="6" fill="none"
                                     stroke="url(#dashGradient)" stroke-width="1" stroke-dasharray="8 4"
-                                    vector-effect="non-scaling-stroke" />
+                                    stroke-dashoffset="0" vector-effect="non-scaling-stroke"
+                                    shape-rendering="geometricPrecision" />
                             </svg>
                         </div>
                         <div>
@@ -97,17 +116,18 @@
                     <div class="tech__card">
                         <div class="tech__card--header">
                             <img class="tech__icon" src="./images/tech1.png" alt="">
-                            <svg class="tech__card-border" viewBox="0 0 56 56" preserveAspectRatio="none"
-                                aria-hidden="true">
+                            <svg class="tech__card-border" viewBox="0 0 56 56" aria-hidden="true">
                                 <defs>
-                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0" stop-color="rgba(160,160,160,.9)" />
-                                        <stop offset="1" stop-color="rgba(105,105,105,.9)" />
+                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1"
+                                        gradientUnits="objectBoundingBox">
+                                        <stop offset="0" stop-color="#A0A0A0" stop-opacity="0.9" />
+                                        <stop offset="1" stop-color="#696969" stop-opacity="0.9" />
                                     </linearGradient>
                                 </defs>
                                 <rect x="0.5" y="0.5" width="55" height="55" rx="6" ry="6" fill="none"
                                     stroke="url(#dashGradient)" stroke-width="1" stroke-dasharray="8 4"
-                                    vector-effect="non-scaling-stroke" />
+                                    stroke-dashoffset="0" vector-effect="non-scaling-stroke"
+                                    shape-rendering="geometricPrecision" />
                             </svg>
                         </div>
                         <div>
@@ -121,17 +141,18 @@
                     <div class="tech__card">
                         <div class="tech__card--header">
                             <img class="tech__icon" src="./images/tech2.png" alt="">
-                            <svg class="tech__card-border" viewBox="0 0 56 56" preserveAspectRatio="none"
-                                aria-hidden="true">
+                            <svg class="tech__card-border" viewBox="0 0 56 56" aria-hidden="true">
                                 <defs>
-                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0" stop-color="rgba(160,160,160,.9)" />
-                                        <stop offset="1" stop-color="rgba(105,105,105,.9)" />
+                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1"
+                                        gradientUnits="objectBoundingBox">
+                                        <stop offset="0" stop-color="#A0A0A0" stop-opacity="0.9" />
+                                        <stop offset="1" stop-color="#696969" stop-opacity="0.9" />
                                     </linearGradient>
                                 </defs>
                                 <rect x="0.5" y="0.5" width="55" height="55" rx="6" ry="6" fill="none"
                                     stroke="url(#dashGradient)" stroke-width="1" stroke-dasharray="8 4"
-                                    vector-effect="non-scaling-stroke" />
+                                    stroke-dashoffset="0" vector-effect="non-scaling-stroke"
+                                    shape-rendering="geometricPrecision" />
                             </svg>
                         </div>
                         <div>
@@ -144,17 +165,18 @@
                     <div class="tech__card">
                         <div class="tech__card--header">
                             <img class="tech__icon" src="./images/tech3.png" alt="">
-                            <svg class="tech__card-border" viewBox="0 0 56 56" preserveAspectRatio="none"
-                                aria-hidden="true">
+                            <svg class="tech__card-border" viewBox="0 0 56 56" aria-hidden="true">
                                 <defs>
-                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0" stop-color="rgba(160,160,160,.9)" />
-                                        <stop offset="1" stop-color="rgba(105,105,105,.9)" />
+                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1"
+                                        gradientUnits="objectBoundingBox">
+                                        <stop offset="0" stop-color="#A0A0A0" stop-opacity="0.9" />
+                                        <stop offset="1" stop-color="#696969" stop-opacity="0.9" />
                                     </linearGradient>
                                 </defs>
                                 <rect x="0.5" y="0.5" width="55" height="55" rx="6" ry="6" fill="none"
                                     stroke="url(#dashGradient)" stroke-width="1" stroke-dasharray="8 4"
-                                    vector-effect="non-scaling-stroke" />
+                                    stroke-dashoffset="0" vector-effect="non-scaling-stroke"
+                                    shape-rendering="geometricPrecision" />
                             </svg>
                         </div>
                         <div>
@@ -169,17 +191,18 @@
                     <div class="tech__card">
                         <div class="tech__card--header">
                             <img class="tech__icon" src="./images/tech5.png" alt="">
-                            <svg class="tech__card-border" viewBox="0 0 56 56" preserveAspectRatio="none"
-                                aria-hidden="true">
+                            <svg class="tech__card-border" viewBox="0 0 56 56" aria-hidden="true">
                                 <defs>
-                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0" stop-color="rgba(160,160,160,.9)" />
-                                        <stop offset="1" stop-color="rgba(105,105,105,.9)" />
+                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1"
+                                        gradientUnits="objectBoundingBox">
+                                        <stop offset="0" stop-color="#A0A0A0" stop-opacity="0.9" />
+                                        <stop offset="1" stop-color="#696969" stop-opacity="0.9" />
                                     </linearGradient>
                                 </defs>
                                 <rect x="0.5" y="0.5" width="55" height="55" rx="6" ry="6" fill="none"
                                     stroke="url(#dashGradient)" stroke-width="1" stroke-dasharray="8 4"
-                                    vector-effect="non-scaling-stroke" />
+                                    stroke-dashoffset="0" vector-effect="non-scaling-stroke"
+                                    shape-rendering="geometricPrecision" />
                             </svg>
                         </div>
                         <div>
@@ -191,17 +214,18 @@
                     <div class="tech__card">
                         <div class="tech__card--header">
                             <img class="tech__icon" src="./images/tech4.png" alt="">
-                            <svg class="tech__card-border" viewBox="0 0 56 56" preserveAspectRatio="none"
-                                aria-hidden="true">
+                            <svg class="tech__card-border" viewBox="0 0 56 56" aria-hidden="true">
                                 <defs>
-                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0" stop-color="rgba(160,160,160,.9)" />
-                                        <stop offset="1" stop-color="rgba(105,105,105,.9)" />
+                                    <linearGradient id="dashGradient" x1="0" y1="0" x2="1" y2="1"
+                                        gradientUnits="objectBoundingBox">
+                                        <stop offset="0" stop-color="#A0A0A0" stop-opacity="0.9" />
+                                        <stop offset="1" stop-color="#696969" stop-opacity="0.9" />
                                     </linearGradient>
                                 </defs>
                                 <rect x="0.5" y="0.5" width="55" height="55" rx="6" ry="6" fill="none"
                                     stroke="url(#dashGradient)" stroke-width="1" stroke-dasharray="8 4"
-                                    vector-effect="non-scaling-stroke" />
+                                    stroke-dashoffset="0" vector-effect="non-scaling-stroke"
+                                    shape-rendering="geometricPrecision" />
                             </svg>
                         </div>
                         <div>
@@ -222,7 +246,7 @@
             <div class="system__container animate animate-from-bottom">
                 <div class="system__slider">
                     <div class="system__track">
-                        <div class="system__item" data-slide="1">
+                        <div class="system__item active" data-slide="1">
                             <h2>01</h2>
                             <div class="system__item--desc">
                                 <h3>Анализ и аудит</h3>
@@ -230,7 +254,7 @@
                             </div>
                             <img src="./images/system.png">
                         </div>
-                        <div class="system__item active" data-slide="2">
+                        <div class="system__item" data-slide="2">
                             <h2>02</h2>
                             <div class="system__item--desc">
                                 <h3>Техническое задание</h3>
@@ -319,7 +343,7 @@
                 </div>
                 <button id="submitBtn" type="submit">Отправить</button>
                 <div class="form__links animate animate-from-bottom">
-                    <a class="form__link" href="#">Не любите формы?</a>
+                    <p class="form__link" href="#" data-noslide>Не любите формы?</p>
                     <div class="form__links--container">
                         <a href="#">hello@immortal.com <img src="./images/arrow-up-right.png"></a>
                         <a href="#">telegram <img src="./images/arrow-up-right.png"></a>
@@ -333,13 +357,13 @@
         <div class="footer__container">
             <div class="footer__item">
                 <div class="footer__logo">
-                    <a href="/"><img class="footer__logo--image" src="./images/logo.png"></a>
+                    <a href="/" data-noslide><img class="footer__logo--image" src="./images/logo.png"></a>
                 </div>
             </div>
             <div class="footer__item">
-                <a href="#" class="footer__item--link footer3"></a>
-                <a href="#" class="footer__item--link footer1"></a>
-                <a href="#" class="footer__item--link footer2"></a>
+                <a href="#" data-noslide class="footer__item--link footer3"></a>
+                <a href="#" data-noslide class="footer__item--link footer1"></a>
+                <a href="#" data-noslide class="footer__item--link footer2"></a>
             </div>
         </div>
         <hr>
@@ -352,7 +376,6 @@
             </div>
         </div>
     </footer>
-
 
 </body>
 

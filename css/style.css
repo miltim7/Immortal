@@ -154,7 +154,6 @@ section {
     width: 24px;
     position: absolute;
     bottom: 24px;
-    left: 50%;
     transform: translateX(-50%);
     height: 56px;
 }
@@ -237,7 +236,6 @@ section {
     align-items: center;
 }
 
-.header__links--item {}
 
 .header__links a {
     font-family: "Manrope Semibold";
@@ -265,10 +263,7 @@ section {
     text-decoration: none;
 }
 
-.header__btn a:hover{
-    background: rgba(194, 194, 194, 1);
-    border: 2px solid rgba(255, 255, 255, 1)
-}
+.header__btn a:hover {}
 
 .header__btn img {
     width: 35px;
@@ -339,7 +334,7 @@ section {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(4px);
     background: rgba(255, 255, 255, 0.03);
 }
 
@@ -593,11 +588,20 @@ section {
 .tech__card-border {
     position: absolute;
     inset: 0;
-    /* поверх всей карточки */
     pointer-events: none;
-    /* легкий объём у штрихов */
     filter: drop-shadow(0 0 0.5px rgba(255, 255, 255, .12));
+    position: absolute;
+    inset: 0;
+    display: block;
+    /* Safari: svg как блочный */
+    width: 100%;
+    /* Safari: явные размеры */
+    height: 100%;
+    pointer-events: none;
+    filter: none;
+    /* отключи фильтр: он даёт баги в Safari */
 }
+
 
 /* опционально: "бегущие" штрихи */
 @keyframes dash {
@@ -689,6 +693,8 @@ section {
     text-decoration: none;
 }
 
+
+
 .form__links--container {
     display: flex;
     flex-direction: row;
@@ -760,9 +766,7 @@ section {
     gap: 12px;
 }
 
-.form form button:hover:not(.loading):not(.success) {
-    background: rgba(194, 194, 194, 1);
-}
+.form form button:hover:not(.loading):not(.success) {}
 
 /* --- состояние загрузки --- */
 .form form button.loading {
@@ -936,10 +940,6 @@ section {
 
 .footer__item--rek {
     font-family: 'Manrope' !important;
-}
-
-.footer__item--rek:hover {
-    color: #FFFFFF !important;
 }
 
 .footer__logo {
@@ -1182,7 +1182,7 @@ section {
     }
 
     .header__links--item {
-        display: none;
+        display: none !important;
     }
 
     .main {
