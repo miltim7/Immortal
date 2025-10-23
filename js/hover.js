@@ -12,11 +12,14 @@
     function injectStyles() {
         if (document.getElementById(STYLE_ID)) return;
         const css = `
-    .js-slide-link { display:inline-block; } /* без overflow тут */
+    .js-slide-link { 
+      display:inline-block;
+      overflow:hidden;  /* обрезаем дублирующийся текст */
+    }
     .js-slide-wrap  {
       display:inline-block;
       position:relative;
-      overflow:hidden;           /* маска — именно здесь! */
+      overflow:hidden;
       vertical-align:middle;
     }
     .js-slide-inner {
@@ -28,15 +31,23 @@
       will-change: transform;
     }
     .js-slide-layer {
-      display:flex;              /* надёжная высота, без коллапса */
+      display:flex;
       align-items:center;
       line-height:inherit;
       margin:0;
     }
     .js-slide-link:hover .js-slide-inner,
     .js-slide-link:focus-visible .js-slide-inner {
-      /* две одинаковые «строки», значит двигаем на половину высоты контейнера */
       transform:translateY(-50%);
+    }
+    
+    /* Inactive состояние для карточек */
+    .system__item:not(.active) .js-slide-link {
+      opacity: 0.6;
+    }
+    .system__item:not(.active) .js-slide-link * {
+      border: none !important;
+      animation: none !important;
     }
     `;
         const style = document.createElement('style');
@@ -50,7 +61,6 @@
     }
 
     function measureAndLockHeight(wrap, firstLayer) {
-        // авто-высота -> меряем -> фиксируем ровно в пикселях
         wrap.style.height = 'auto';
         const h = firstLayer.getBoundingClientRect().height;
         wrap.style.height = h + 'px';

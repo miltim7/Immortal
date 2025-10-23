@@ -494,5 +494,5 @@ form.addEventListener('submit', async (e) => {
         btn.classList.remove('success');
         btn.textContent = 'Отправить';
         btn.disabled = false;
-    }, 16000);
+    }, 2000);
 });

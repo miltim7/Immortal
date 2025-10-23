@@ -768,6 +768,21 @@ section {
     align-items: center;
     justify-content: center;
     gap: 12px;
+    height: 51px;
+    box-sizing: border-box;
+}
+
+.form form button,
+.form form button.loading,
+.form form button.success {
+    padding: 12px 32px;
+    height: 51px;
+    box-sizing: border-box;
+}
+
+.form form button:hover,
+.form form button:active {
+    padding: 12px 32px;
 }
 
 .form form button:hover:not(.loading):not(.success) {}
