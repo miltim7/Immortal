@@ -413,7 +413,8 @@ section {
 /* Убираем отдельные трансформации для каждого слайда */
 .system__item:not(.active) {
     transform: scale(0.75);
-    opacity: 0.7;
+    opacity: .6;
+    border: none !important;
 }
 
 .system__item.active {

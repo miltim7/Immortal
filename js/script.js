@@ -138,13 +138,15 @@ class SystemSlider {
         slide.style.transform = 'scale(1)';
         slide.style.marginInline = '0px';
         slide.style.opacity = '1';
+        slide.classList.add('active');
       } else {
         slide.style.transform = 'scale(' + this.INACTIVE_SCALE + ')';
         slide.style.marginInline = (-comp) + 'px';
-        slide.style.opacity = '0.7';
+        slide.style.opacity = '0.6';
+        slide.classList.remove('active');
       }
     });
-  }
+}
 
   createDots() {
     if (!this.dotsContainer) return;
